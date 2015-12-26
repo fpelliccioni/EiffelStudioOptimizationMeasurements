@@ -13,15 +13,13 @@ create
 	make
 
 feature
-
 	tools : TOOLS
-
 
 	---------------------------------------------------------------
 	-- Sum algorithms
 	---------------------------------------------------------------
 
-	sum_original(data : ARRAY[INTEGER]) : INTEGER_64
+	sum_cannonical(data : ARRAY[INTEGER]) : INTEGER_64
 		local
 			i: INTEGER
 		do
@@ -35,7 +33,7 @@ feature
 			end
 		end
 
-	sum_original_32(data : ARRAY[INTEGER]) : INTEGER_32
+	sum_cannonical_32(data : ARRAY[INTEGER]) : INTEGER_32
 		local
 			i: INTEGER
 		do
@@ -49,7 +47,7 @@ feature
 			end
 		end
 
-	sum_original_across(data : ARRAY[INTEGER]) : INTEGER_64
+	sum_across(data : ARRAY[INTEGER]) : INTEGER_64
 		do
 			across
 				data as ic
@@ -58,7 +56,7 @@ feature
 			end
 		end
 
-	sum_original_across_32(data : ARRAY[INTEGER]) : INTEGER_32
+	sum_across_32(data : ARRAY[INTEGER]) : INTEGER_32
 		do
 			across
 				data as ic
@@ -168,7 +166,7 @@ feature
          end
       end
 
-   sum_alex(data : ARRAY[INTEGER]) : INTEGER_64
+   sum_kogtenkov(data : ARRAY[INTEGER]) : INTEGER_64
       local
          i: INTEGER
          a: SPECIAL [INTEGER]
@@ -188,7 +186,7 @@ feature
          end
       end
 
-   sum_alex_type_mismatch_64(data : ARRAY[INTEGER]) : INTEGER_64
+   sum_kogtenkov_type_mismatch_64(data : ARRAY[INTEGER]) : INTEGER_64
       local
          i: INTEGER
          a: SPECIAL [INTEGER]
@@ -245,9 +243,7 @@ feature
 					runs := runs + 1
 				end
 
---				e_time := nanoseconds_since_epoch
 				measurements.put_front ((e_time - s_time)/runs)
-
 				iterations := iterations - 1
 			end
 
@@ -303,9 +299,7 @@ feature
 					runs := runs + 1
 				end
 
---				e_time := nanoseconds_since_epoch
 				measurements.put_front ((e_time - s_time)/runs)
-
 				iterations := iterations - 1
 			end
 
@@ -333,7 +327,7 @@ feature
 		local
 			base_time  : DOUBLE
 		do
-			    base_time := measure(data, f, n);
+			    base_time := measure(data, f, n)
 
 			    print(array_size)
 			    print(";")
@@ -354,7 +348,7 @@ feature
 		local
 			base_time  : DOUBLE
 		do
-			    base_time := measure_32(data, f, n);
+			    base_time := measure_32(data, f, n)
 
 			    print(array_size)
 			    print(";")
@@ -375,9 +369,8 @@ feature
 			array_size : INTEGER_32
 			n          : INTEGER_32
 			base_time  : DOUBLE
-			data       : ARRAY[INTEGER];
+			data       : ARRAY[INTEGER]
 		do
-
 			from
 				array_size := min_size
 			    n := 10
@@ -386,18 +379,18 @@ feature
 			loop
 				data := tools.create_random_array(array_size)
 
-				run_mearurements_detail   (data, agent sum_original, min_size, array_size, n)
-				run_mearurements_detail_32(data, agent sum_original_32, min_size, array_size, n)
-				run_mearurements_detail   (data, agent sum_original_across, min_size, array_size, n)
-				run_mearurements_detail_32(data, agent sum_original_across_32, min_size, array_size, n)
+				run_mearurements_detail   (data, agent sum_cannonical, min_size, array_size, n)
+				run_mearurements_detail_32(data, agent sum_cannonical_32, min_size, array_size, n)
+				run_mearurements_detail   (data, agent sum_across, min_size, array_size, n)
+				run_mearurements_detail_32(data, agent sum_across_32, min_size, array_size, n)
 				run_mearurements_detail   (data, agent sum_local_count, min_size, array_size, n)
 				run_mearurements_detail   (data, agent sum_type_mismatch, min_size, array_size, n)
 				run_mearurements_detail   (data, agent sum_type_mismatch_64, min_size, array_size, n)
 				run_mearurements_detail   (data, agent sum_local_count_type_mismatch, min_size, array_size, n)
 				run_mearurements_detail   (data, agent sum_local_count_type_mismatch_64, min_size, array_size, n)
 				run_mearurements_detail   (data, agent sum_just_special, min_size, array_size, n)
-				run_mearurements_detail   (data, agent sum_alex, min_size, array_size, n)
-				run_mearurements_detail   (data, agent sum_alex_type_mismatch_64, min_size, array_size, n)
+				run_mearurements_detail   (data, agent sum_kogtenkov, min_size, array_size, n)
+				run_mearurements_detail   (data, agent sum_kogtenkov_type_mismatch_64, min_size, array_size, n)
 
 				array_size := array_size * 2
 			end
