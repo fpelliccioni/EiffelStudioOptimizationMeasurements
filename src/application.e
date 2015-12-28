@@ -19,7 +19,7 @@ feature
 	-- Sum algorithms
 	---------------------------------------------------------------
 
-	sum_cannonical(data : ARRAY[INTEGER]) : INTEGER_64
+	sum_canonical(data : ARRAY[INTEGER]) : INTEGER_64
 		local
 			i: INTEGER
 		do
@@ -33,7 +33,7 @@ feature
 			end
 		end
 
-	sum_cannonical_32(data : ARRAY[INTEGER]) : INTEGER_32
+	sum_canonical_32(data : ARRAY[INTEGER]) : INTEGER_32
 		local
 			i: INTEGER
 		do
@@ -166,6 +166,22 @@ feature
          end
       end
 
+   sum_just_special_32(data : ARRAY[INTEGER]) : INTEGER_32
+      local
+         i: INTEGER
+         a: SPECIAL [INTEGER]
+      do
+         from
+            i := 0
+            a := data.area
+         until
+            i >= data.count
+         loop
+            Result := Result + a[i]
+            i := i + 1
+         end
+      end
+
    sum_kogtenkov(data : ARRAY[INTEGER]) : INTEGER_64
       local
          i: INTEGER
@@ -186,7 +202,7 @@ feature
          end
       end
 
-   sum_kogtenkov_type_mismatch_64(data : ARRAY[INTEGER]) : INTEGER_64
+   sum_kogtenkov_64(data : ARRAY[INTEGER]) : INTEGER_64
       local
          i: INTEGER
          a: SPECIAL [INTEGER]
@@ -200,7 +216,7 @@ feature
          until
             i >= n
          loop
-            x := a [i]
+            x := a[i]
             Result := Result + x
             i := i + 1
          end
@@ -379,8 +395,8 @@ feature
 			loop
 				data := tools.create_random_array(array_size)
 
-				run_mearurements_detail   (data, agent sum_cannonical, min_size, array_size, n)
-				run_mearurements_detail_32(data, agent sum_cannonical_32, min_size, array_size, n)
+				run_mearurements_detail   (data, agent sum_canonical, min_size, array_size, n)
+				run_mearurements_detail_32(data, agent sum_canonical_32, min_size, array_size, n)
 				run_mearurements_detail   (data, agent sum_across, min_size, array_size, n)
 				run_mearurements_detail_32(data, agent sum_across_32, min_size, array_size, n)
 				run_mearurements_detail   (data, agent sum_local_count, min_size, array_size, n)
@@ -389,8 +405,9 @@ feature
 				run_mearurements_detail   (data, agent sum_local_count_type_mismatch, min_size, array_size, n)
 				run_mearurements_detail   (data, agent sum_local_count_type_mismatch_64, min_size, array_size, n)
 				run_mearurements_detail   (data, agent sum_just_special, min_size, array_size, n)
+				run_mearurements_detail_32(data, agent sum_just_special_32, min_size, array_size, n)
 				run_mearurements_detail   (data, agent sum_kogtenkov, min_size, array_size, n)
-				run_mearurements_detail   (data, agent sum_kogtenkov_type_mismatch_64, min_size, array_size, n)
+				run_mearurements_detail   (data, agent sum_kogtenkov_64, min_size, array_size, n)
 
 				array_size := array_size * 2
 			end
